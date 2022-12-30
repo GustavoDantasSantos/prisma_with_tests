@@ -9,6 +9,9 @@ export class ListUserService {
 
   public async execute(): Promise<IUser[] | undefined> {
     const users = await this.repository.listAll();
+    if (!users) {
+      throw new Error("Some error for get all users");
+    }
     return users;
   }
 }
