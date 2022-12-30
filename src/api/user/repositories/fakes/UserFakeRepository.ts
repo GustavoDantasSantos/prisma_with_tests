@@ -12,4 +12,9 @@ export class UserFakeRepository {
     }
     return users;
   }
+
+  public create(): IUser {
+    const user: IUser = { name: faker.name.firstName(), email: faker.internet.email() };
+    return user;
+  }
 }
