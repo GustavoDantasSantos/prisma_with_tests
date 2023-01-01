@@ -7,7 +7,7 @@ export class ListUserController {
     try {
       const userRepository = new UserRepository();
       const listUserService = new ListUserService(userRepository);
-      const users = listUserService.execute();
+      const users = await listUserService.execute();
       res.status(200).send(users);
     } catch (error) {
       res.status(500).send(error);
