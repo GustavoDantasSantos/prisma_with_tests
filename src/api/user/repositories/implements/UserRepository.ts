@@ -28,4 +28,17 @@ export class UserRepository implements IUserRepository {
       console.error(error);
     }
   }
+
+  public async delete(id: string): Promise<IUser | undefined> {
+    try {
+      const userDeleted = await this.repository.user.delete({
+        where: {
+          id: id,
+        },
+      });
+      return userDeleted;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
