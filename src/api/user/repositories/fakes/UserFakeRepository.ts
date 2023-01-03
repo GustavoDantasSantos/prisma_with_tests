@@ -16,7 +16,7 @@ export class UserFakeRepository implements IUserRepository {
   }
 
   public listAll(): Promise<IUser[]> {
-    const users = new Promise<IUser[]>((resolve, _) => {
+    const users = new Promise<IUser[]>((resolve) => {
       return resolve(this.usersArrayFake);
     });
     console.log(users);
@@ -24,7 +24,7 @@ export class UserFakeRepository implements IUserRepository {
   }
 
   public create(): Promise<IUser> {
-    const user = new Promise<IUser>((resolve, _) => {
+    const user = new Promise<IUser>((resolve) => {
       const user = { id: faker.random.numeric(), name: faker.name.firstName(), email: faker.internet.email() };
       this.usersArrayFake.push(user);
       return resolve(user);
@@ -38,5 +38,21 @@ export class UserFakeRepository implements IUserRepository {
       findUser ? resolve(findUser) : reject;
     });
     return userDeleted;
+  }
+
+  update(id: string, data: IUser): Promise<IUser | undefined> {
+    const userUpdate = new Promise<IUser>((resolve) => {
+      const newArray: IUser[] = [];
+      for (const item of this.usersArrayFake) {
+        if (item.id !== id) {
+          newArray.push(item);
+        }
+      }
+      const newUser = data;
+      newArray.push(newUser);
+      this.usersArrayFake = newArray;
+      return resolve(newUser);
+    });
+    return userUpdate;
   }
 }

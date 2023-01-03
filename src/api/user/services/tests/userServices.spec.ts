@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { IUser } from "../../entities/interface/IUser";
 import { UserFakeRepository } from "../../repositories/fakes/UserFakeRepository";
 import { CreateUserService } from "../CreateUserService";
 import { DeleteUserService } from "../DeleteUserService";
@@ -31,5 +30,15 @@ describe("Tests about all user services", () => {
     });
     const userDeleted = await deleteUserService.execute(userGenerated.id as string);
     expect(userDeleted).toHaveProperty("name");
+  });
+
+  it("Should be able update a user", async () => {
+    const fakeRepository = new UserFakeRepository();
+    const createUserService = new CreateUserService(fakeRepository);
+    const userGenerated = await createUserService.execute({
+      name: faker.name.firstName(),
+      email: faker.internet.email(),
+    });
+    expect(userGenerated).toHaveProperty("password");
   });
 });

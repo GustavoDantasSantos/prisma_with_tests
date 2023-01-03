@@ -41,4 +41,18 @@ export class UserRepository implements IUserRepository {
       console.error(error);
     }
   }
+
+  public async update(id: string, data: IUser): Promise<IUser | undefined> {
+    try {
+      const userUpdated = await this.repository.user.update({
+        where: {
+          id: id,
+        },
+        data,
+      });
+      return userUpdated;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
